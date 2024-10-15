@@ -1,0 +1,28 @@
+productName: "Mobileye-Core"
+scheduledTime: "53 3 * * *"
+stages:
+
+  - name: "Product Build" 
+    type: build
+    args:
+      prefix: "platform"
+      
+  - name: "Repository Artifact Deploy" 
+    type: deploy
+    args:
+      repositoryTargets:
+        - type: "artifactory"
+          url: "https://artifactory.example.com/repository/my-app-releases" 
+        - type: nexus
+          url: "https://nexus.example.com/repository/my-app-releases" 
+
+  - name: "Notfication"
+    type: notify
+    args:
+      channels:
+        - type: mail
+          endpoint: "integrationcore@mobileye.com"
+          level: 3
+        - type: slack
+          endpoint: "https://hooks.slack.com/services/T00000000/"
+          level: 1

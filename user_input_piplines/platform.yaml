@@ -1,0 +1,26 @@
+productName: "Mobileye-Platform"
+scheduledTime: "52 3 * * *"
+stages:
+
+  - name: "Product Build" 
+    type: build
+    args:
+      prefix: "platform"
+      
+  - name: "Repository Artifact Deploy" 
+    type: deploy
+    args:
+      repositoryTargets:
+        - type: "s3"
+          url: "https://s3.amazonaws.com/my-app-bucket/releases/" 
+
+  - name: "Notfication"
+    type: notify
+    args:
+      channels:
+        - type: mail
+          endpoint: "integrationcore@mobileye.com"
+          level: 5
+        - type: slack
+          endpoint: "https://hooks.slack.com/services/T00000000/"
+          level: 3
